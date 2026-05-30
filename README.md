@@ -1,74 +1,94 @@
-# React + TypeScript + Vite
+# E-Commerce Project (Frontend)
+ระบบหน้าร้านค้าออนไลน์ที่พัฒนาด้วย React และ TypeScript เชื่อมต่อกับ Django Backend พร้อมระบบจัดการตะกร้าสินค้าและประวัติการสั่งซื้อ
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Tech Stack
+- **Framework**: React (Vite)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Routing**: React Router DOM
+- **API**: Backend (Python)
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 1. Prerequisites
+ตรวจสอบให้แน่ใจว่าคุณได้ติดตั้ง Node.js (v18+) และ npm/yarn เรียบร้อยแล้ว
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Installation
+ติดตั้ง Dependencies ที่จำเป็น:
+```bash
+npm install
+# หรือ
+yarn install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### การติดตั้ง Tailwind CSS
+รันคำสั่งเพื่อติดตั้ง Tailwind และเครื่องมือที่เกี่ยวข้อง:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install -D tailwindcss@^3 postcss autoprefixer
+npx tailwindcss init -p
 ```
-"# Exam_Frontend_by_React" 
+
+### ตั้งค่า Tailwind Config
+เปิดไฟล์ `tailwind.config.js` แล้วแก้ไขค่า `content` ให้ครอบคลุมไฟล์ในโปรเจกต์ของคุณ:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+### เพิ่ม Tailwind Directives ใน CSS
+เปิดไฟล์ src/index.css (หรือไฟล์ CSS หลักของคุณ) แล้วลบเนื้อหาเก่าทิ้งทั้งหมด จากนั้นเพิ่มบรรทัดเหล่านี้ลงไป:
+
+```bash
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+### 3. Environment Configuration
+สร้างไฟล์ .env ใน Root directory ของโปรเจกต์ และระบุ URL ของ Backend:
+```bash
+VITE_API_BASE_URL=http://localhost:8000/api
+```
+
+### 4. Running the Development Server
+เริ่มการทำงานของเซิร์ฟเวอร์ในโหมดพัฒนา:
+```bash
+npm run dev
+# หรือ
+yarn dev
+```
+(เข้าใช้งานผ่านเบราว์เซอร์ที่: http://localhost:5173)
+
+## Folder Structure
+โครงสร้างของโปรเจกต์ถูกจัดระเบียบตามหน้าที่การทำงานดังนี้:
+
+```text
+src/
+├── components/     # UI Components (Layout, Navbar, etc.)
+├── pages/          # Page Definitions (Auth, Buyer, Seller)
+├── types/          # TypeScript Interfaces (Product, Cart, User)
+├── utils/          # API Instances (Axios Config, Interceptors)
+└── App.tsx         # Main Routing Configuration
+```
+
+## Key Features
+- Authentication: ระบบเข้าสู่ระบบ และสมัครสมาชิก
+- Product Shop: ระบบเลือกซื้อสินค้าพร้อมตัวกรอง (Search, Min/Max Price, Sorting)
+- Cart System: เพิ่ม-ลดสินค้าในตะกร้าแบบ Real-time (Sync กับ Backend)
+- Payment : ระบบจำลองการชำระเงิน
+- Order History: ระบบประวัติการสั่งซื้อย้อนหลัง
+
+## Notes
+- ตรวจสอบให้แน่ใจว่า Django Backend กำลังรันอยู่ที่พอร์ต 8000
+- หากมีการเปลี่ยนแปลงฐานข้อมูลหรือโครงสร้าง API โปรดอัปเดต .env ให้สอดคล้องกัน
